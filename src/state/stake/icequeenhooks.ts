@@ -1,6 +1,6 @@
 import { ChainId, CurrencyAmount, JSBI, Token, TokenAmount, WAVAX, Pair } from '@pangolindex/sdk'
 import { useMemo } from 'react'
-import { PNG, SUSHI, ETH } from '../../constants'
+import { PNG, SUSHI, ETH, SNOB } from '../../constants'
 import { STAKING_REWARDS_INTERFACE } from '../../constants/abis/staking-rewards'
 import { PairState, usePair, usePairs } from '../../data/Reserves'
 import { useActiveWeb3React } from '../../hooks'
@@ -19,6 +19,10 @@ export const STAKING_REWARDS_INFO: {
 	}[]
 } = {
 	[ChainId.AVALANCHE]: [
+		{
+			tokens: [WAVAX[ChainId.AVALANCHE], SNOB[ChainId.AVALANCHE]],
+			stakingRewardAddress: '0x7d7ecd4d370384b17dfc1b4155a8410e97841b65'
+		},
 		{
 			tokens: [WAVAX[ChainId.AVALANCHE], ETH[ChainId.AVALANCHE]],
 			stakingRewardAddress: '0xa16381eae6285123c323a665d4d99a6bcfaac307'

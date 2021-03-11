@@ -3,7 +3,6 @@ import React, { useState } from 'react'
 import { Text } from 'rebass'
 import { NavLink } from 'react-router-dom'
 import { darken } from 'polished'
-import { useTranslation } from 'react-i18next'
 
 import styled from 'styled-components'
 
@@ -16,7 +15,7 @@ import { CardNoise } from '../earn/styled'
 import { CountUp } from 'use-count-up'
 import { TYPE, ExternalLink } from '../../theme'
 
-import { RedCard } from '../Card'
+import { GreyCard } from '../Card'
 import Settings from '../Settings'
 import Menu from '../Menu'
 
@@ -130,7 +129,7 @@ const PNGAmount = styled(AccountElement)`
   height: 36px;
   font-weight: 500;
   background-color: ${({ theme }) => theme.bg3};
-  background: radial-gradient(174.47% 188.91% at 1.84% 0%, #f97316 0%, #E84142 100%), #edeef2;
+  background: radial-gradient(174.47% 188.91% at 1.84% 0%, #2a97db 0%, #2a97db 100%), #edeef2;
 `
 
 const PNGWrapper = styled.span`
@@ -151,7 +150,7 @@ const HideSmall = styled.span`
   `};
 `
 
-const NetworkCard = styled(RedCard)`
+const NetworkCard = styled(GreyCard)`
   border-radius: 12px;
   padding: 8px 12px;
   ${({ theme }) => theme.mediaWidth.upToSmall`
@@ -258,7 +257,6 @@ const NETWORK_LABELS: { [chainId in ChainId]?: string } = {
 
 export default function Header() {
   const { account, chainId } = useActiveWeb3React()
-  const { t } = useTranslation()
 
   const userEthBalance = useETHBalances(account ? [account] : [])?.[account ?? '']
   const [isDark] = useDarkModeManager()
@@ -278,12 +276,11 @@ export default function Header() {
       <HeaderRow>
         <Title href=".">
           <PngIcon>
-            <img width={'24px'} src={isDark ? LogoDark : Logo} alt="logo" />
+            <img width={'50px'} src={isDark ? LogoDark : Logo} alt="logo" />
           </PngIcon>
         </Title>
         <HeaderLinks>
           <StyledNavLink id={`swap-nav-link`} to={'/swap'}>
-            {t('swap')}
           </StyledNavLink>
           <StyledNavLink
             id={`pool-nav-link`}
@@ -296,16 +293,16 @@ export default function Header() {
               pathname.startsWith('/find')
             }
           >
-            {t('pool')}
           </StyledNavLink>
-          <StyledNavLink id={`stake-nav-link`} to={'/png'}>
-            PNG
+          <StyledNavLink id={`globe-nav-link`} to={'/snowglobes'}>
+            Snowglobes
+           </StyledNavLink>
+           <StyledNavLink id={`queen-nav-link`} to={'/icequeen'}>
+            Icequeen
            </StyledNavLink>
           <StyledExternalLink id={`info-nav-link`} href={ANALYTICS_PAGE}>
-	            Charts <span style={{ fontSize: '11px' }}>↗</span>
           </StyledExternalLink>
           <StyledExternalLink id={`gov-nav-link`} href={'https://gov.pangolin.exchange'}>
-	            Forum <span style={{ fontSize: '11px' }}>↗</span>
           </StyledExternalLink>
         </HeaderLinks>
       </HeaderRow>
@@ -337,7 +334,7 @@ export default function Header() {
                     </TYPE.white>
                   </HideSmall>
                 )}
-                PNG
+                SNOB
               </PNGAmount>
               <CardNoise />
             </PNGWrapper>

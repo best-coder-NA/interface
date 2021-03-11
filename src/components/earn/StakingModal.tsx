@@ -15,20 +15,11 @@ import { usePairContract, useStakingContract } from '../../hooks/useContract'
 import { useApproveCallback, ApprovalState } from '../../hooks/useApproveCallback'
 import { splitSignature } from 'ethers/lib/utils'
 import { StakingInfo, useDerivedStakeInfo } from '../../state/stake/hooks'
-import { wrappedCurrencyAmount } from '../../utils/wrappedCurrency'
 import { TransactionResponse } from '@ethersproject/providers'
 import { useTransactionAdder } from '../../state/transactions/hooks'
 import { LoadingView, SubmittedView } from '../ModalViews'
 import GasFeeAlert from '../GasFeeAlert'
 
-const HypotheticalRewardRate = styled.div<{ dim: boolean }>`
-   display: flex;
-   justify-content: space-between;
-   padding-right: 20px;
-   padding-left: 20px;
-
-   opacity: ${({ dim }) => (dim ? 0.5 : 1)};
- `
 
 const ContentWrapper = styled(AutoColumn)`
    width: 100%;
@@ -48,16 +39,6 @@ export default function StakingModal({ isOpen, onDismiss, stakingInfo, userLiqui
 	// track and parse user input
 	const [typedValue, setTypedValue] = useState('')
 	const { parsedAmount, error } = useDerivedStakeInfo(typedValue, stakingInfo.stakedAmount.token, userLiquidityUnstaked)
-	const parsedAmountWrapped = wrappedCurrencyAmount(parsedAmount, chainId)
-
-	let hypotheticalRewardRate: TokenAmount = new TokenAmount(stakingInfo.rewardRate.token, '0')
-	if (parsedAmountWrapped?.greaterThan('0')) {
-		hypotheticalRewardRate = stakingInfo.getHypotheticalRewardRate(
-			stakingInfo.stakedAmount.add(parsedAmountWrapped),
-			stakingInfo.totalStakedAmount.add(parsedAmountWrapped),
-			stakingInfo.totalRewardRate
-		)
-	}
 
 	// state for pending and submitted txn views
 	const addTransaction = useTransactionAdder()
@@ -207,17 +188,6 @@ export default function StakingModal({ isOpen, onDismiss, stakingInfo, userLiqui
 						customBalanceText={'Available to deposit: '}
 						id="stake-liquidity-token"
 					/>
-
-					<HypotheticalRewardRate dim={!hypotheticalRewardRate.greaterThan('0')}>
-						<div>
-							<TYPE.black fontWeight={600}>Weekly Rewards</TYPE.black>
-						</div>
-
-						<TYPE.black>
-							{hypotheticalRewardRate.multiply((60 * 60 * 24 * 7).toString()).toSignificant(4, { groupSeparator: ',' })}{' '}
-               PNG / week
-             </TYPE.black>
-					</HypotheticalRewardRate>
 
 					<GasFeeAlert></GasFeeAlert>
 

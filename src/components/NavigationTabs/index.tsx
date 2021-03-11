@@ -1,7 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
 import { darken } from 'polished'
-import { useTranslation } from 'react-i18next'
 import { NavLink, Link as HistoryLink } from 'react-router-dom'
 
 import { ArrowLeft } from 'react-feather'
@@ -30,6 +29,7 @@ const StyledNavLink = styled(NavLink).attrs({
   text-decoration: none;
   color: ${({ theme }) => theme.text3};
   font-size: 20px;
+  display: none;
 
   &.${activeClassName} {
     border-radius: 12px;
@@ -53,14 +53,11 @@ const StyledArrowLeft = styled(ArrowLeft)`
 `
 
 export function SwapPoolTabs({ active }: { active: 'swap' | 'pool' }) {
-  const { t } = useTranslation()
   return (
     <Tabs style={{ marginBottom: '20px', display: 'none' }}>
       <StyledNavLink id={`swap-nav-link`} to={'/swap'} isActive={() => active === 'swap'}>
-        {t('swap')}
       </StyledNavLink>
       <StyledNavLink id={`pool-nav-link`} to={'/pool'} isActive={() => active === 'pool'}>
-        {t('pool')}
       </StyledNavLink>
     </Tabs>
   )

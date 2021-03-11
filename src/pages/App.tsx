@@ -16,6 +16,8 @@ import {
 } from './AddLiquidity/redirects'
 import Earn from './Earn'
 import Manage from './Earn/Manage'
+import SnowGlobeManage from './Snowglobes/Manage'
+import IceQueenManage from './Icequeen/Manage'
 import Pool from './Pool'
 import PoolFinder from './PoolFinder'
 import RemoveLiquidity from './RemoveLiquidity'
@@ -23,6 +25,8 @@ import { RedirectOldRemoveLiquidityPathStructure } from './RemoveLiquidity/redir
 import Swap from './Swap'
 import { RedirectPathToSwapOnly, RedirectToSwap } from './Swap/redirects'
 import Airdrop from './Airdrop'
+import Snowglobes from './Snowglobes'
+import Icequeen from './Icequeen'
 
 const AppWrapper = styled.div`
   display: flex;
@@ -75,6 +79,8 @@ export default function App() {
           <Polling />
           <Web3ReactManager>
             <Switch>
+              <Route exact strict path="/snowglobes" component={Snowglobes} />
+              <Route exact strict path="/icequeen" component={Icequeen} />
               <Route exact strict path="/swap" component={Swap} />
               <Route exact strict path="/swap/:outputCurrency" component={RedirectToSwap} />
               <Route exact strict path="/send" component={RedirectPathToSwapOnly} />
@@ -92,6 +98,8 @@ export default function App() {
               <Route exact strict path="/remove/:tokens" component={RedirectOldRemoveLiquidityPathStructure} />
               <Route exact strict path="/remove/:currencyIdA/:currencyIdB" component={RemoveLiquidity} />
               <Route exact strict path="/png/:currencyIdA/:currencyIdB" component={Manage} />
+              <Route exact strict path="/snowglobe/:currencyIdA/:currencyIdB" component={SnowGlobeManage} />
+              <Route exact strict path="/icequeen/:currencyIdA/:currencyIdB" component={IceQueenManage} />
               <Route component={RedirectPathToSwapOnly} />
             </Switch>
           </Web3ReactManager>
